@@ -341,8 +341,8 @@ void ShellExt::buildSubMenu(const seafile::RepoInfo& repo,
                             const std::string& path_in_repo)
 {
     insertSubMenuItem(SEAFILE_TR("download"), Download);
-    insertSubMenuItem(SEAFILE_TR("get seafile download link"), GetShareLink);
-    insertSubMenuItem(SEAFILE_TR("get seafile internal link"), GetInternalLink);
+    insertSubMenuItem(SEAFILE_TR("get alphabox download link"), GetShareLink);
+    insertSubMenuItem(SEAFILE_TR("get alphabox internal link"), GetInternalLink);
 
     std::unique_ptr<wchar_t[]> path_w(utils::utf8ToWString(path_));
     bool is_dir = GetFileAttributesW(path_w.get()) & FILE_ATTRIBUTE_DIRECTORY;

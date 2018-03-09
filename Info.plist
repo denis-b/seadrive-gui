@@ -5,15 +5,15 @@
 	<key>CFBundleExecutable</key>
 	<string>seadrive-gui</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SeaDrive Application</string>
+	<string>AlphaDrive Application</string>
 	<key>CFBundleIconFile</key>
 	<string>seadrive-icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.seafile.seadrive</string>
+	<string>com.alphabox.alphadrive</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleName</key>
-	<string>SeaDrive</string>
+	<string>AlphaDrive</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.8.7</string>
 	<key>CFBundleVersion</key>

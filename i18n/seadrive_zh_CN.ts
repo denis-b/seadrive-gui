@@ -938,6 +938,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="142"/>
+        <source>Login</source>
+        <translation>登录</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="131"/>
+        <source>Logout</source>
+        <translation>登出</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="134"/>
         <source>Open %1 &amp;folder</source>
         <translation>打开 %1 文件夹(&amp;F)</translation>
     </message>
@@ -1329,9 +1339,9 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <location filename="../src/shib/shib-login-dialog.cpp" line="40"/>
-        <source>Login with Shibboleth</source>
-        <translation>Shibboleth 登录</translation>
+        <location filename="../src/shib/shib-login-dialog.cpp" line="39"/>
+        <source>Login with WeChat</source>
+        <translation>AlphaBox 微信登录</translation>
     </message>
     <message>
         <location filename="../src/shib/shib-login-dialog.cpp" line="112"/>

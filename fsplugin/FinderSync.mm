@@ -40,7 +40,7 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 @end
 
 static const char *const kClientCommandQueueName =
-    "com.seafile.seadrive.findersync.ClientCommandQueue";
+    "com.alphabox.alphadrive.findersync.ClientCommandQueue";
 static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
@@ -366,82 +366,83 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 #endif
 
 - (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {
-    if (whichMenu != FIMenuKindContextualMenuForItems &&
-        whichMenu != FIMenuKindContextualMenuForContainer)
-        return nil;
+    return nil;
+    // if (whichMenu != FIMenuKindContextualMenuForItems &&
+    //     whichMenu != FIMenuKindContextualMenuForContainer)
+    //     return nil;
 
-    SEAFILE_DEBUG_LOG (@"FinderSync: menuForMenuKind called for");
+    // SEAFILE_DEBUG_LOG (@"FinderSync: menuForMenuKind called for");
 
-    // Produce a menu for the extension.
-    NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
-    NSMenuItem *shareLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
-                                                 @"Get Seafile Download Link")
-                        action:@selector(shareLinkAction:)
-                 keyEquivalent:@""];
-    NSMenuItem *internalLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
-                                                 @"Get Seafile Internal Link")
-                        action:@selector(internalLinkAction:)
-                 keyEquivalent:@""];
-    NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
-    [shareLinkItem setImage:seafileImage];
-    [internalLinkItem setImage:seafileImage];
+    // // Produce a menu for the extension.
+    // NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
+    // NSMenuItem *shareLinkItem =
+    //     [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
+    //                                              @"Get Seafile Download Link")
+    //                     action:@selector(shareLinkAction:)
+    //              keyEquivalent:@""];
+    // NSMenuItem *internalLinkItem =
+    //     [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
+    //                                              @"Get Seafile Internal Link")
+    //                     action:@selector(internalLinkAction:)
+    //              keyEquivalent:@""];
+    // NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
+    // [shareLinkItem setImage:seafileImage];
+    // [internalLinkItem setImage:seafileImage];
 
-    // add a menu item for lockFile
-    NSArray *items =
-        [[FIFinderSyncController defaultController] selectedItemURLs];
-    if (![items count])
-        return nil;
-    NSURL *item = items.firstObject;
+    // // add a menu item for lockFile
+    // NSArray *items =
+    //     [[FIFinderSyncController defaultController] selectedItemURLs];
+    // if (![items count])
+    //     return nil;
+    // NSURL *item = items.firstObject;
 
-    NSNumber *isDirectory;
-    bool is_dir = [item getResourceValue:&isDirectory
-                                  forKey:NSURLIsDirectoryKey
-                                   error:nil] &&
-                  [isDirectory boolValue];
+    // NSNumber *isDirectory;
+    // bool is_dir = [item getResourceValue:&isDirectory
+    //                               forKey:NSURLIsDirectoryKey
+    //                                error:nil] &&
+    //               [isDirectory boolValue];
 
-    // we don't have a lock-file menuitem for folders
-    // early return
-    if (is_dir)
-        return menu;
+    // // we don't have a lock-file menuitem for folders
+    // // early return
+    // if (is_dir)
+    //     return menu;
 
-    std::string file_path =
-        item.path.precomposedStringWithCanonicalMapping.UTF8String;
-    // find where we have it
-    auto file = file_status_.find(is_dir ? file_path + "/" : file_path);
-    if (file != file_status_.end()) {
-        NSString *lockFileTitle;
-        if (file->second != PathStatus::SYNC_STATUS_LOCKED) {
-            if (file->second == PathStatus::SYNC_STATUS_LOCKED_BY_ME) {
-                lockFileTitle =
-                    NSLocalizedString(@"Unlock This File", @"Unlock This File");
-            } else {
-                lockFileTitle = NSLocalizedString(@"Lock This File", @"Lock This File");
-            }
-        } else {
-            lockFileTitle = NSLocalizedString(@"Lock This File", @"Lock This File");
-        }
+    // std::string file_path =
+    //     item.path.precomposedStringWithCanonicalMapping.UTF8String;
+    // // find where we have it
+    // auto file = file_status_.find(is_dir ? file_path + "/" : file_path);
+    // if (file != file_status_.end()) {
+    //     NSString *lockFileTitle;
+    //     if (file->second != PathStatus::SYNC_STATUS_LOCKED) {
+    //         if (file->second == PathStatus::SYNC_STATUS_LOCKED_BY_ME) {
+    //             lockFileTitle =
+    //                 NSLocalizedString(@"Unlock This File", @"Unlock This File");
+    //         } else {
+    //             lockFileTitle = NSLocalizedString(@"Lock This File", @"Lock This File");
+    //         }
+    //     } else {
+    //         lockFileTitle = NSLocalizedString(@"Lock This File", @"Lock This File");
+    //     }
 
-        NSMenuItem *lockFileItem = [menu addItemWithTitle:lockFileTitle
-                                                   action:@selector(lockFileAction:)
-                                            keyEquivalent:@""];
+    //     NSMenuItem *lockFileItem = [menu addItemWithTitle:lockFileTitle
+    //                                                action:@selector(lockFileAction:)
+    //                                         keyEquivalent:@""];
 
-        [lockFileItem setImage:seafileImage];
+    //     [lockFileItem setImage:seafileImage];
 
-        if (file->second == PathStatus::SYNC_STATUS_LOCKED)
-            [lockFileItem setEnabled:FALSE];
-    }
+    //     if (file->second == PathStatus::SYNC_STATUS_LOCKED)
+    //         [lockFileItem setEnabled:FALSE];
+    // }
 
-    NSString *showHistoryTitle;
-    NSMenuItem *showHistoryItem =
-        [menu addItemWithTitle:NSLocalizedString(@"View File History",
-                                                 @"View File History")
-                        action:@selector(showHistoryAction:)
-                 keyEquivalent:@""];
-    [showHistoryItem setImage:seafileImage];
+    // NSString *showHistoryTitle;
+    // NSMenuItem *showHistoryItem =
+    //     [menu addItemWithTitle:NSLocalizedString(@"View File History",
+    //                                              @"View File History")
+    //                     action:@selector(showHistoryAction:)
+    //              keyEquivalent:@""];
+    // [showHistoryItem setImage:seafileImage];
 
-    return menu;
+    // return menu;
 }
 
 - (IBAction)shareLinkAction:(id)sender {
