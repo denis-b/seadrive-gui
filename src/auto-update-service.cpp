@@ -61,8 +61,8 @@ public:
         win_sparkle_set_registry_path(kWinSparkleRegistryPath);
         win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
         win_sparkle_set_app_details(
-            L"Seafile",
-            L"Seafile Drive Client",
+            L"AlphaBox",
+            L"AlphaBox Drive Client",
             QString(STRINGIZE(SEADRIVE_GUI_VERSION)).toStdWString().c_str());
     }
 
